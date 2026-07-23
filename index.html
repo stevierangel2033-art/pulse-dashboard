@@ -207,6 +207,12 @@ tbody td.l { text-align: left; }
 .code-block .copy-btn { position: absolute; top: 8px; right: 8px; background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.2); color: #eef1f4; }
 .mnote { font-size: 12px; color: var(--text-secondary); background: var(--surface-2); border: 1px solid var(--border); border-radius: 9px; padding: 10px 12px; margin-top: 14px; line-height: 1.5; }
 
+/* ---------- Toast ---------- */
+.toast { position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%) translateY(20px); opacity: 0; pointer-events: none; z-index: 300; padding: 12px 18px; border-radius: 10px; font-size: 13px; font-weight: 500; color: #fff; box-shadow: 0 10px 30px rgba(20,19,15,.25); transition: opacity .2s, transform .2s; max-width: 90vw; }
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+.toast.ok { background: #14130f; } .toast.ok.show { background: #0a7a2f; }
+.toast.err { background: #14130f; } .toast.err.show { background: var(--neg); }
+
 @media (max-width: 1120px) { .kpis { grid-template-columns: repeat(3, 1fr); } }
 @media (max-width: 820px) { .app { grid-template-columns: 1fr; } .sidebar { position: static; height: auto; } }
 
@@ -364,6 +370,7 @@ async function boot() {
   renderAppList();
   renderShell();
   if (apps.length) selectApp(state.appId && apps.some(a => a.id === state.appId) ? state.appId : apps[0].id);
+  handleTiktokReturn();
 }
 
 // show onboarding when the owner has no apps yet, else the dashboard
@@ -634,6 +641,20 @@ function wireCopy(scope) {
 }
 
 const PULSE_ENDPOINT = 'https://zetodvpsrcmbbkzjkdsy.supabase.co';
+// Set to your public TikTok Marketing API App ID to enable real OAuth (see TIKTOK_SETUP.md).
+// Empty => the connect modal uses the sample-data mock and shows a "ready once configured" note.
+const TIKTOK_APP_ID = '';
+const TIKTOK_AUTHORIZE = 'https://business-api.tiktok.com/portal/auth';
+
+function tiktokAuthorizeUrl(appId) {
+  const redirect = PULSE_ENDPOINT + '/functions/v1/tiktok-oauth';
+  const nonce = Math.random().toString(36).slice(2) + Date.now().toString(36);
+  const state = 'app:' + appId + ':' + nonce;
+  return TIKTOK_AUTHORIZE +
+    '?app_id=' + encodeURIComponent(TIKTOK_APP_ID) +
+    '&state=' + encodeURIComponent(state) +
+    '&redirect_uri=' + encodeURIComponent(redirect);
+}
 
 // SDK snippet block for a given api key
 function sdkSnippet(apiKey) {
@@ -715,21 +736,30 @@ function showKeyModal(app, isNew) {
 
 // ---------- connect TikTok ----------
 function showConnectModal(appId) {
+  const hasOAuth = !!TIKTOK_APP_ID;
+  const note = hasOAuth
+    ? 'You\'ll be sent to TikTok to authorize, then returned here with your videos and ad spend loaded.'
+    : 'Real TikTok OAuth is wired up — add your TikTok App ID (see TIKTOK_SETUP.md) to enable it. For now, this generates sample videos and attributed events so you can see the dashboard populate.';
   openModal(
     '<h3>Connect a TikTok Ads account</h3>' +
     '<p class="msub">Pulse pulls the account\'s videos and ad spend, then attributes installs and revenue to each video.</p>' +
-    '<label>Account name</label>' +
+    '<label>Account name <span style="font-weight:400;color:var(--text-muted)">(for sample data)</span></label>' +
     '<input type="text" id="ctName" placeholder="e.g. FitPulse US Ads" autocomplete="off" />' +
-    '<div class="mnote">This build uses a mock TikTok OAuth that generates sample videos and attributed events so you can see the dashboard populate. Production would launch the real TikTok Marketing API consent flow here.</div>' +
+    '<div class="mnote">' + note + '</div>' +
     '<div class="modal-err" id="ctErr"></div>' +
     '<div class="modal-actions">' +
     '<button class="btn-ghost" id="ctCancel">Cancel</button>' +
-    '<button class="btn-primary" id="ctSubmit">Connect account</button>' +
+    (hasOAuth ? '<button class="btn-ghost" id="ctSubmit">Use sample data</button>' : '') +
+    '<button class="btn-primary" id="' + (hasOAuth ? 'ctReal' : 'ctSubmit') + '">' +
+      (hasOAuth ? 'Connect real TikTok account' : 'Connect account') + '</button>' +
     '</div>'
   );
   const nameEl = document.getElementById('ctName');
   nameEl.focus();
   document.getElementById('ctCancel').onclick = closeModal;
+  if (hasOAuth) {
+    document.getElementById('ctReal').onclick = () => { window.location.href = tiktokAuthorizeUrl(appId); };
+  }
   const submit = async () => {
     const errEl = document.getElementById('ctErr');
     errEl.style.display = 'none';
@@ -742,11 +772,38 @@ function showConnectModal(appId) {
       selectApp(appId);
     } catch (e) {
       errEl.textContent = 'Could not connect: ' + e.message; errEl.style.display = 'block';
-      btn.disabled = false; btn.textContent = 'Connect account';
+      btn.disabled = false; btn.textContent = hasOAuth ? 'Use sample data' : 'Connect account';
     }
   };
   document.getElementById('ctSubmit').onclick = submit;
-  nameEl.addEventListener('keydown', (e) => { if (e.key === 'Enter') submit(); });
+  nameEl.addEventListener('keydown', (e) => { if (e.key === 'Enter' && !hasOAuth) submit(); });
+}
+
+// Handle the return from a real TikTok OAuth round-trip (?tiktok=connected&app=<id>).
+function handleTiktokReturn() {
+  let params;
+  try { params = new URLSearchParams(window.location.search); } catch (e) { return; }
+  const status = params.get('tiktok');
+  if (!status) return;
+  const appId = Number(params.get('app')) || null;
+  const messages = {
+    connected: 'TikTok account connected — your videos and spend are loading.',
+    error: 'TikTok connection failed. Please try again.',
+    token_error: 'TikTok sign-in worked but the token exchange failed — check your app secret.',
+    not_configured: 'TikTok OAuth isn\'t configured on the server yet (see TIKTOK_SETUP.md).',
+  };
+  toast(messages[status] || ('TikTok: ' + status), status === 'connected' ? 'ok' : 'err');
+  if (appId && state.apps.some((a) => a.id === appId)) selectApp(appId);
+  // clean the query string so a refresh doesn't re-toast
+  try { window.history.replaceState({}, '', window.location.pathname); } catch (e) {}
+}
+
+function toast(msg, kind) {
+  let el = document.getElementById('pulseToast');
+  if (!el) { el = document.createElement('div'); el.id = 'pulseToast'; el.className = 'toast'; document.body.appendChild(el); }
+  el.textContent = msg;
+  el.className = 'toast show ' + (kind === 'ok' ? 'ok' : 'err');
+  setTimeout(() => { el.className = 'toast ' + (kind === 'ok' ? 'ok' : 'err'); }, 4200);
 }
 
 // ---------- global wiring ----------
@@ -767,8 +824,13 @@ window.addEventListener('resize', () => { if (state.overview) renderChart(); });
     if(!r.ok) throw new Error(j.error_description || j.msg || j.error || ("Request failed ("+r.status+")"));
     return j;
   }
+  const SESSION_KEY = "pulse_session";
+  function saveSession(s){ try { if(s && s.access_token) localStorage.setItem(SESSION_KEY, JSON.stringify({access_token:s.access_token, refresh_token:s.refresh_token, expires_at:s.expires_at || (Math.floor(Date.now()/1000)+(s.expires_in||3600))})); } catch(e){} }
+  function loadSession(){ try { return JSON.parse(localStorage.getItem(SESSION_KEY)||"null"); } catch(e){ return null; } }
+  function clearSession(){ try { localStorage.removeItem(SESSION_KEY); } catch(e){} }
   window.showLogin = function(msg){
     ACCESS_TOKEN = null;
+    clearSession();
     $("loginView").style.display = "flex";
     document.querySelector(".app").style.display = "none";
     if(msg){ $("authErr").textContent = msg; $("authErr").style.display = "block"; }
@@ -809,6 +871,7 @@ window.addEventListener('resize', () => { if (state.overview) renderChart(); });
         session = await authRequest("/auth/v1/token?grant_type=password", {email, password});
       }
       ACCESS_TOKEN = session.access_token;
+      saveSession(session);
       enterApp();
     } catch(err){
       $("authErr").textContent = err.message;
@@ -821,6 +884,11 @@ window.addEventListener('resize', () => { if (state.overview) renderChart(); });
     document.querySelector(".app").style.display = "none";
     $("authForm").addEventListener("submit", submit);
     setMode("signin");
+    var saved = loadSession();
+    if(saved && saved.access_token && (!saved.expires_at || saved.expires_at > Math.floor(Date.now()/1000)+30)){
+      ACCESS_TOKEN = saved.access_token;
+      enterApp();
+    }
   });
 })();
 </script>
