@@ -633,12 +633,17 @@ function wireCopy(scope) {
   });
 }
 
+const PULSE_ENDPOINT = 'https://zetodvpsrcmbbkzjkdsy.supabase.co';
+
 // SDK snippet block for a given api key
 function sdkSnippet(apiKey) {
   return (
     '<span class="tok-com">// 1. Add the Pulse SDK to your iOS app, then:</span>\n' +
     '<span class="tok-key">import</span> Pulse\n\n' +
-    'Pulse.start(apiKey: <span class="tok-str">"' + esc(apiKey) + '"</span>)\n' +
+    'Pulse.start(\n' +
+    '  apiKey: <span class="tok-str">"' + esc(apiKey) + '"</span>,\n' +
+    '  endpoint: <span class="tok-str">"' + esc(PULSE_ENDPOINT) + '"</span>\n' +
+    ')\n' +
     'Pulse.setClickId(ttclid)          <span class="tok-com">// from your TikTok deep link</span>\n' +
     'Pulse.track(<span class="tok-str">"purchase"</span>, revenue: <span class="tok-str">9.99</span>)  <span class="tok-com">// fire a conversion</span>'
   );
@@ -694,7 +699,7 @@ function showKeyModal(app, isNew) {
     '<div class="key-row"><code>' + esc(app.api_key) + '</code>' +
     '<button class="copy-btn" data-copy="' + esc(app.api_key) + '">Copy</button></div>' +
     '<label>iOS SDK setup</label>' +
-    '<div class="code-block"><button class="copy-btn" data-copy="import Pulse\n\nPulse.start(apiKey: &quot;' + esc(app.api_key) + '&quot;)\nPulse.setClickId(ttclid)\nPulse.track(&quot;purchase&quot;, revenue: 9.99)">Copy</button>' +
+    '<div class="code-block"><button class="copy-btn" data-copy="import Pulse\n\nPulse.start(apiKey: &quot;' + esc(app.api_key) + '&quot;, endpoint: &quot;' + esc(PULSE_ENDPOINT) + '&quot;)\nPulse.setClickId(ttclid)\nPulse.track(&quot;purchase&quot;, revenue: 9.99)">Copy</button>' +
     '<pre>' + sdkSnippet(app.api_key) + '</pre></div>' +
     '<div class="mnote">Keep this key private — it authorizes event ingest for this app. ' +
     'Next, connect a TikTok Ads account to pull videos and see attribution.</div>' +
