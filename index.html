@@ -165,6 +165,48 @@ tbody td.l { text-align: left; }
 .bar-track { height: 6px; background: var(--surface-0); border-radius: 4px; overflow: hidden; }
 .bar-fill { height: 100%; border-radius: 4px; background: var(--series-1); }
 
+/* ---------- Buttons ---------- */
+.new-app-btn { width: 100%; margin-top: 10px; padding: 9px 10px; border: 1px dashed var(--border-strong); background: var(--surface-2); border-radius: 9px; font: inherit; font-size: 13px; font-weight: 600; color: var(--brand); cursor: pointer; }
+.new-app-btn:hover { background: #eef4fd; border-color: #c7dbf6; }
+.btn-primary { padding: 11px 18px; border: none; border-radius: 9px; background: var(--brand); color: #fff; font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; }
+.btn-primary:hover { background: var(--brand-ink); }
+.btn-primary:disabled { opacity: .6; cursor: default; }
+.btn-ghost { padding: 8px 13px; border: 1px solid var(--border); background: var(--surface-1); border-radius: 8px; font: inherit; font-size: 12.5px; font-weight: 600; color: var(--text-secondary); cursor: pointer; }
+.btn-ghost:hover { border-color: var(--border-strong); color: var(--text-primary); }
+.topbar-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
+
+/* ---------- Onboarding empty state ---------- */
+.onboard { display: grid; place-items: center; min-height: 70vh; }
+.onboard-card { max-width: 460px; text-align: center; background: var(--surface-1); border: 1px solid var(--border); border-radius: 16px; box-shadow: var(--shadow); padding: 34px 30px; }
+.onboard-logo { width: 44px; height: 44px; border-radius: 11px; background: linear-gradient(135deg, #2a78d6, #1baf7a); display: grid; place-items: center; color: #fff; font-weight: 700; font-size: 20px; margin: 0 auto 14px; }
+.onboard-card h2 { margin: 0 0 8px; font-size: 22px; letter-spacing: -.4px; }
+.onboard-card p { color: var(--text-secondary); font-size: 13.5px; line-height: 1.55; margin: 0 0 20px; }
+.onboard-steps { margin-top: 24px; text-align: left; display: flex; flex-direction: column; gap: 12px; }
+.ostep { display: flex; gap: 12px; align-items: flex-start; font-size: 13px; color: var(--text-secondary); }
+.ostep b { color: var(--text-primary); }
+.onum { width: 22px; height: 22px; flex: none; border-radius: 50%; background: #eef4fd; color: var(--brand); font-weight: 700; font-size: 12px; display: grid; place-items: center; }
+
+/* ---------- Modal ---------- */
+.modal-root { position: fixed; inset: 0; background: rgba(20,19,15,.35); display: flex; align-items: center; justify-content: center; padding: 24px; z-index: 200; }
+.modal { width: 100%; max-width: 480px; background: var(--surface-1); border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 20px 60px rgba(20,19,15,.22); padding: 24px 24px 22px; max-height: 88vh; overflow-y: auto; }
+.modal h3 { margin: 0 0 4px; font-size: 18px; letter-spacing: -.3px; }
+.modal .msub { color: var(--text-muted); font-size: 13px; margin: 0 0 18px; }
+.modal label { display: block; font-size: 12px; font-weight: 600; color: var(--text-secondary); margin: 14px 0 6px; }
+.modal input[type=text] { width: 100%; padding: 10px 12px; border: 1px solid var(--border-strong); border-radius: 9px; font: inherit; font-size: 14px; outline: none; background: var(--surface-2); }
+.modal input[type=text]:focus { border-color: var(--brand); background: #fff; box-shadow: 0 0 0 3px rgba(42,120,214,.12); }
+.modal .hint-sm { font-size: 11.5px; color: var(--text-muted); margin-top: 5px; }
+.modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 22px; }
+.modal-err { display: none; margin-top: 12px; font-size: 12.5px; color: var(--neg); background: #fdeaea; border: 1px solid #f7cfcf; padding: 8px 10px; border-radius: 8px; }
+.key-row { display: flex; gap: 8px; align-items: stretch; margin-top: 6px; }
+.key-row code { flex: 1; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12.5px; background: var(--surface-0); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; overflow-x: auto; white-space: nowrap; color: var(--text-primary); }
+.copy-btn { border: 1px solid var(--border-strong); background: var(--surface-1); border-radius: 8px; padding: 0 12px; font: inherit; font-size: 12px; font-weight: 600; cursor: pointer; color: var(--text-secondary); white-space: nowrap; }
+.copy-btn:hover { border-color: var(--brand); color: var(--brand); }
+.code-block { position: relative; margin-top: 8px; }
+.code-block pre { margin: 0; background: #14130f; color: #eef1f4; border-radius: 10px; padding: 14px 14px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; line-height: 1.6; overflow-x: auto; }
+.code-block pre .tok-key { color: #7fb2ff; } .code-block pre .tok-str { color: #7fdca0; } .code-block pre .tok-com { color: #8a8984; }
+.code-block .copy-btn { position: absolute; top: 8px; right: 8px; background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.2); color: #eef1f4; }
+.mnote { font-size: 12px; color: var(--text-secondary); background: var(--surface-2); border: 1px solid var(--border); border-radius: 9px; padding: 10px 12px; margin-top: 14px; line-height: 1.5; }
+
 @media (max-width: 1120px) { .kpis { grid-template-columns: repeat(3, 1fr); } }
 @media (max-width: 820px) { .app { grid-template-columns: 1fr; } .sidebar { position: static; height: auto; } }
 
@@ -216,6 +258,7 @@ tbody td.l { text-align: left; }
       <div>
         <div class="side-label">Your apps</div>
         <div class="app-list" id="appList"></div>
+        <button class="new-app-btn" id="newAppBtn">＋ New app</button>
       </div>
       <div class="side-foot">
         Live data from Supabase — connect an app's SDK and its TikTok Ads account to see which video drives installs and revenue.
@@ -223,12 +266,30 @@ tbody td.l { text-align: left; }
     </aside>
 
     <main class="main">
+      <div class="onboard" id="onboardView" style="display:none">
+        <div class="onboard-card">
+          <div class="onboard-logo">P</div>
+          <h2>Welcome to Pulse</h2>
+          <p>Track which TikTok video drives installs and revenue for your iOS apps. Create your first app to get an SDK key, then connect a TikTok Ads account.</p>
+          <button class="btn-primary" id="onboardCreate">Create your first app</button>
+          <div class="onboard-steps">
+            <div class="ostep"><span class="onum">1</span><div><b>Create an app</b><div>Get a unique API key for the SDK.</div></div></div>
+            <div class="ostep"><span class="onum">2</span><div><b>Drop in the SDK</b><div>Add a few lines to your iOS app.</div></div></div>
+            <div class="ostep"><span class="onum">3</span><div><b>Connect TikTok</b><div>Pull videos &amp; spend, see attribution.</div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="dashView">
       <div class="topbar">
         <div>
           <h2 id="appName">—</h2>
           <div class="sub"><span class="bundle" id="bundle"></span> &nbsp;·&nbsp; <span id="range">Last 30 days</span></div>
         </div>
-        <div class="accounts" id="accounts"></div>
+        <div class="topbar-actions">
+          <button class="btn-ghost" id="sdkBtn">SDK &amp; API key</button>
+          <div class="accounts" id="accounts"></div>
+        </div>
       </div>
 
       <div class="kpis" id="kpis"></div>
@@ -261,8 +322,10 @@ tbody td.l { text-align: left; }
           </table>
         </div>
       </div>
+      </div>
     </main>
   </div>
+  <div class="modal-root" id="modalRoot" style="display:none"></div>
   <script>
 'use strict';
 
@@ -280,14 +343,17 @@ const colorFor = (i) => PALETTE[i % PALETTE.length];
 const SB_URL = "https://zetodvpsrcmbbkzjkdsy.supabase.co";
 const SB_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpldG9kdnBzcmNtYmJremprZHN5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA0NTEzOTMsImV4cCI6MjA5NjAyNzM5M30.SyUDDLcNZgGe8NTYufxsrpt2UG0cYEh0EhppZL2gJVU";
 let ACCESS_TOKEN = null;
-async function api(path){
+async function api(path, payload){
   let fn="pulse_apps", body={};
+  const mc=path.match(/^\/api\/apps\/(\d+)\/tiktok\/connect$/);
   const m=path.match(/^\/api\/apps\/(\d+)(?:\/(overview|videos))?$/);
-  if(path==="/api/apps"){ fn="pulse_apps"; }
+  if(path==="/api/apps" && payload){ fn="pulse_create_app"; body={p_name:payload.name, p_bundle_id:payload.bundle_id||null}; }
+  else if(path==="/api/apps"){ fn="pulse_apps"; }
+  else if(mc){ fn="pulse_connect_tiktok"; body={p_app_id:Number(mc[1]), p_account_name:(payload&&payload.account_name)||null}; }
   else if(m){ const id=Number(m[1]), sub=m[2]; fn=!sub?"pulse_app":(sub==="overview"?"pulse_overview":"pulse_videos"); body={p_id:id}; }
   const r=await fetch(SB_URL+"/rest/v1/rpc/"+fn,{method:"POST",headers:{apikey:SB_ANON,Authorization:"Bearer "+(ACCESS_TOKEN||SB_ANON),"Content-Type":"application/json"},body:JSON.stringify(body)});
   if(r.status===401||r.status===403){ showLogin("Session expired \u2014 please sign in again."); throw new Error("unauthorized"); }
-  if(!r.ok) throw new Error(fn+" "+r.status);
+  if(!r.ok){ let d=""; try{ d=(await r.json()).message||""; }catch(_){} throw new Error(d||(fn+" "+r.status)); }
   return r.json();
 }
 
@@ -296,7 +362,15 @@ async function boot() {
   const { apps } = await api('/api/apps');
   state.apps = apps;
   renderAppList();
-  if (apps.length) selectApp(apps[0].id);
+  renderShell();
+  if (apps.length) selectApp(state.appId && apps.some(a => a.id === state.appId) ? state.appId : apps[0].id);
+}
+
+// show onboarding when the owner has no apps yet, else the dashboard
+function renderShell() {
+  const has = state.apps.length > 0;
+  document.getElementById('onboardView').style.display = has ? 'none' : 'grid';
+  document.getElementById('dashView').style.display = has ? '' : 'none';
 }
 
 function renderAppList() {
@@ -326,6 +400,7 @@ async function selectApp(id) {
   ]);
   state.overview = overview;
   state.videos = videos.videos;
+  state.app = detail.app;
 
   document.getElementById('appName').textContent = detail.app.name;
   document.getElementById('bundle').textContent = detail.app.bundle_id;
@@ -342,14 +417,7 @@ function renderAccounts(accts) {
     accts
       .map((a) => `<span class="chip"><span class="dot"></span>${a.account_name}</span>`)
       .join('') + `<span class="chip add">+ Connect TikTok</span>`;
-  el.querySelector('.chip.add').onclick = async () => {
-    await fetch('/api/apps/' + state.appId + '/tiktok/connect', {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ account_name: 'New TikTok Account' }),
-    });
-    selectApp(state.appId);
-  };
+  el.querySelector('.chip.add').onclick = () => showConnectModal(state.appId);
 }
 
 function renderKpis(k) {
@@ -539,6 +607,148 @@ function renderTable() {
     };
   });
 }
+
+// ---------- modal system ----------
+const esc = (s) => String(s == null ? '' : s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+function openModal(html) {
+  const root = document.getElementById('modalRoot');
+  root.innerHTML = '<div class="modal">' + html + '</div>';
+  root.style.display = 'flex';
+  root.onclick = (e) => { if (e.target === root) closeModal(); };
+}
+function closeModal() {
+  const root = document.getElementById('modalRoot');
+  root.style.display = 'none';
+  root.innerHTML = '';
+}
+
+function wireCopy(scope) {
+  (scope || document).querySelectorAll('.copy-btn[data-copy]').forEach((btn) => {
+    btn.onclick = async () => {
+      try { await navigator.clipboard.writeText(btn.getAttribute('data-copy')); }
+      catch (_) {}
+      const t = btn.textContent; btn.textContent = 'Copied'; setTimeout(() => (btn.textContent = t), 1200);
+    };
+  });
+}
+
+// SDK snippet block for a given api key
+function sdkSnippet(apiKey) {
+  return (
+    '<span class="tok-com">// 1. Add the Pulse SDK to your iOS app, then:</span>\n' +
+    '<span class="tok-key">import</span> Pulse\n\n' +
+    'Pulse.start(apiKey: <span class="tok-str">"' + esc(apiKey) + '"</span>)\n' +
+    'Pulse.setClickId(ttclid)          <span class="tok-com">// from your TikTok deep link</span>\n' +
+    'Pulse.track(<span class="tok-str">"purchase"</span>, revenue: <span class="tok-str">9.99</span>)  <span class="tok-com">// fire a conversion</span>'
+  );
+}
+
+// ---------- create app ----------
+function showNewAppModal() {
+  openModal(
+    '<h3>Create an app</h3>' +
+    '<p class="msub">Each app gets its own SDK key. Name it and we\'ll generate the key.</p>' +
+    '<label>App name</label>' +
+    '<input type="text" id="naName" placeholder="e.g. FitPulse" autocomplete="off" />' +
+    '<label>Bundle ID <span style="font-weight:400;color:var(--text-muted)">(optional)</span></label>' +
+    '<input type="text" id="naBundle" placeholder="com.yourco.fitpulse" autocomplete="off" />' +
+    '<div class="hint-sm">Leave blank and we\'ll derive one from the name.</div>' +
+    '<div class="modal-err" id="naErr"></div>' +
+    '<div class="modal-actions">' +
+    '<button class="btn-ghost" id="naCancel">Cancel</button>' +
+    '<button class="btn-primary" id="naSubmit">Create app</button>' +
+    '</div>'
+  );
+  const name = document.getElementById('naName');
+  name.focus();
+  document.getElementById('naCancel').onclick = closeModal;
+  const submit = async () => {
+    const errEl = document.getElementById('naErr');
+    errEl.style.display = 'none';
+    const nm = name.value.trim();
+    if (!nm) { errEl.textContent = 'Please enter an app name.'; errEl.style.display = 'block'; return; }
+    const btn = document.getElementById('naSubmit');
+    btn.disabled = true; btn.textContent = 'Creating…';
+    try {
+      const res = await api('/api/apps', { name: nm, bundle_id: document.getElementById('naBundle').value.trim() });
+      const app = res.app;
+      await boot();
+      selectApp(app.id);
+      showKeyModal(app, true);
+    } catch (e) {
+      errEl.textContent = 'Could not create app: ' + e.message; errEl.style.display = 'block';
+      btn.disabled = false; btn.textContent = 'Create app';
+    }
+  };
+  document.getElementById('naSubmit').onclick = submit;
+  name.addEventListener('keydown', (e) => { if (e.key === 'Enter') submit(); });
+}
+
+// ---------- api key + SDK setup ----------
+function showKeyModal(app, isNew) {
+  openModal(
+    '<h3>' + (isNew ? 'App created 🎉' : 'SDK &amp; API key') + '</h3>' +
+    '<p class="msub">' + esc(app.name) + ' · <span style="font-family:ui-monospace,Menlo,monospace">' + esc(app.bundle_id) + '</span></p>' +
+    '<label>API key</label>' +
+    '<div class="key-row"><code>' + esc(app.api_key) + '</code>' +
+    '<button class="copy-btn" data-copy="' + esc(app.api_key) + '">Copy</button></div>' +
+    '<label>iOS SDK setup</label>' +
+    '<div class="code-block"><button class="copy-btn" data-copy="import Pulse\n\nPulse.start(apiKey: &quot;' + esc(app.api_key) + '&quot;)\nPulse.setClickId(ttclid)\nPulse.track(&quot;purchase&quot;, revenue: 9.99)">Copy</button>' +
+    '<pre>' + sdkSnippet(app.api_key) + '</pre></div>' +
+    '<div class="mnote">Keep this key private — it authorizes event ingest for this app. ' +
+    'Next, connect a TikTok Ads account to pull videos and see attribution.</div>' +
+    '<div class="modal-actions">' +
+    '<button class="btn-ghost" id="kmClose">Done</button>' +
+    '<button class="btn-primary" id="kmConnect">Connect TikTok</button>' +
+    '</div>'
+  );
+  wireCopy(document.getElementById('modalRoot'));
+  document.getElementById('kmClose').onclick = closeModal;
+  document.getElementById('kmConnect').onclick = () => showConnectModal(app.id);
+}
+
+// ---------- connect TikTok ----------
+function showConnectModal(appId) {
+  openModal(
+    '<h3>Connect a TikTok Ads account</h3>' +
+    '<p class="msub">Pulse pulls the account\'s videos and ad spend, then attributes installs and revenue to each video.</p>' +
+    '<label>Account name</label>' +
+    '<input type="text" id="ctName" placeholder="e.g. FitPulse US Ads" autocomplete="off" />' +
+    '<div class="mnote">This build uses a mock TikTok OAuth that generates sample videos and attributed events so you can see the dashboard populate. Production would launch the real TikTok Marketing API consent flow here.</div>' +
+    '<div class="modal-err" id="ctErr"></div>' +
+    '<div class="modal-actions">' +
+    '<button class="btn-ghost" id="ctCancel">Cancel</button>' +
+    '<button class="btn-primary" id="ctSubmit">Connect account</button>' +
+    '</div>'
+  );
+  const nameEl = document.getElementById('ctName');
+  nameEl.focus();
+  document.getElementById('ctCancel').onclick = closeModal;
+  const submit = async () => {
+    const errEl = document.getElementById('ctErr');
+    errEl.style.display = 'none';
+    const btn = document.getElementById('ctSubmit');
+    btn.disabled = true; btn.textContent = 'Connecting…';
+    try {
+      await api('/api/apps/' + appId + '/tiktok/connect', { account_name: nameEl.value.trim() });
+      closeModal();
+      await boot();
+      selectApp(appId);
+    } catch (e) {
+      errEl.textContent = 'Could not connect: ' + e.message; errEl.style.display = 'block';
+      btn.disabled = false; btn.textContent = 'Connect account';
+    }
+  };
+  document.getElementById('ctSubmit').onclick = submit;
+  nameEl.addEventListener('keydown', (e) => { if (e.key === 'Enter') submit(); });
+}
+
+// ---------- global wiring ----------
+document.getElementById('newAppBtn').addEventListener('click', showNewAppModal);
+document.getElementById('onboardCreate').addEventListener('click', showNewAppModal);
+document.getElementById('sdkBtn').addEventListener('click', () => { if (state.app) showKeyModal(state.app, false); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
 
 window.addEventListener('resize', () => { if (state.overview) renderChart(); });
 // boot() is called after successful login (see auth.js)
